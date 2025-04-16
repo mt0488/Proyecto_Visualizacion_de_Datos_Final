@@ -2,12 +2,12 @@
   import * as d3 from "d3";
   import { onMount } from "svelte";
 
-onMount(() => {
-  const script = document.createElement("script");
-  script.src = "https://public.flourish.studio/resources/embed.js";
-  script.async = true;
-  document.body.appendChild(script);
-});
+  onMount(() => {
+    const script = document.createElement("script");
+    script.src = "https://public.flourish.studio/resources/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+  });
 
   let paises = [
     { nombre: "Estados Unidos", medallas: 98 },
@@ -22,20 +22,42 @@ onMount(() => {
     { nombre: "Brasil", medallas: 24 }
   ];
 
-  const escalaFactor = 4; // Factor de escala para reducir las medallas
-  const max = d3.max(paises, d => d.medallas / escalaFactor); // Ajustar el máximo según la escala
+  const escalaFactor = 4;
+  const max = d3.max(paises, d => d.medallas / escalaFactor);
   let escalaColumnas = d3.scaleLinear().domain([0, max]).range([0, 500]);
 </script>
 
-
 <main>
-  <h1>Juegos Olimpicos</h1>
+  <div class="header-container">
+    <img src="/images/logo.png" alt="Logo JJOO" class="logo-jjoo" />
+    <h1>Juegos Olimpicos: Paris 2024</h1>
+    <img src="/images/paris.png" alt="Logo París 2024" class="logo-paris" />
+  </div>
 
-  <h2>Medallero Paris 2024</h2>
+  <p class="intro">Los Juegos Olímpicos de París 2024 marcaron un hito al reunir a más de 10.000 atletas de 204 países en 32 disciplinas
+     deportivas, celebradas en escenarios emblemáticos de la capital francesa. Durante 16 días de intensa competencia, se
+      vivieron momentos inolvidables que destacaron el espíritu deportivo y la excelencia atlética. A continuacion un breve
+    video con lo que fue lo mejor de Paris 2024...</p>
+
+
+    <div class="video-container">
+      <iframe 
+        width="1000" 
+        height="562" 
+        src="https://www.youtube.com/embed/vy6FivZHRjQ" 
+        title="YouTube video player" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+    </div>
+
+  
+
+  <h2>Medallero Olimpico</h2>
 
   {#each paises as pais}
     <div class="fila">
-      <!-- Mostrar la bandera del país -->
       <div class="etiqueta">
         <img src={`/images/${pais.nombre}.svg`} alt={pais.nombre} class="bandera" />
       </div>
@@ -48,7 +70,6 @@ onMount(() => {
   {/each}
 
   <section class="historia-section">
-    
     <table class="historia-lista tabla-deportes">
       <thead>
         <tr>
@@ -71,13 +92,18 @@ onMount(() => {
     </table>
   </section>
 
-
   <h2 class="graficos-header">La localía... ¿Ayudó a Francia?</h2>
-  <p>Para responder esta pregunta, comparemos la cantidad de medallas entre Francia y Estados Unidos en las anteriores ediciones y luego en la ultima edicion.</p>
-  
+  <p>Competir como país anfitrión suele ser una ventaja significativa para los atletas,
+     ya que la familiaridad con el entorno, el apoyo del público local y la reducción del 
+     estrés logístico pueden mejorar su rendimiento. Sin embargo, esta localía también puede 
+     transformarse en una fuente de presión adicional, ya que las expectativas de la nación
+     están puestas sobre ellos, lo que puede afectar tanto positiva como negativamente su
+     desempeño.¿Fue esto un impulso o una carga para los atletas franceses en París 2024?
+     Para responder esta pregunta, vamos a retroceder en el tiempo y analizar
+     cómo se ha comportado Francia en comparación con una potencia histórica como Estados Unidos,
+     contrastando sus resultados en esta edición con los de los Juegos anteriores.</p>
   
   <section class="graficos-container">
-    <!-- Primer gráfico -->
     <div class="flourish-embed flourish-chart" data-src="visualisation/22674075">
       <script src="https://public.flourish.studio/resources/embed.js"></script>
       <noscript>
@@ -85,7 +111,6 @@ onMount(() => {
       </noscript>
     </div>
   
-    <!-- Segundo gráfico -->
     <div class="flourish-embed flourish-chart" data-src="visualisation/22561745">
       <script src="https://public.flourish.studio/resources/embed.js"></script>
       <noscript>
@@ -93,65 +118,87 @@ onMount(() => {
       </noscript>
     </div>
   </section>
-  
-
-  
 
   <footer class="footer">
     <p>© 2025 Juegos Olímpicos - Todos los derechos reservados</p>
     <div class="footer-social">
-      <a href="https://facebook.com" target="_blank" class="social-link">Benjamin Sanchez Salas</a>
-      <a href="https://twitter.com" target="_blank" class="social-link">Mateo Tejera</a>
+      <a href="https://www.linkedin.com/in/benja-sanchez-salas-4a8769360/" target="_blank" class="social-link">Benjamin Sanchez Salas</a>
+      <a href="http://www.linkedin.com/in/mateo-tejera-089b89270" target="_blank" class="social-link">Mateo Tejera</a>
     </div>
   </footer>
-
 </main>
 
-
-
-
-
 <style>
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem; 
+  }
 
-
- h1 {
+  .header-container h1 {
+    flex: 1; 
     text-align: center;
     font-family: 'Avenir', sans-serif;
     font-weight: 500;
     color: #000000;
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin: 0;
   }
 
- 
+  .logo-jjoo,
+  .logo-paris {
+    width: 100px; 
+    height: auto;
+  }
+
+  .intro {
+    font-family: "Avenir", sans-serif;
+    font-weight: 200;
+    text-align: justify;
+  }
+
+  .video-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    margin-bottom: 7rem;
+    
+  }
+
+  .video-container iframe {
+    width: 100%; 
+    max-width: 1000px; 
+    height: 562px; 
+    border-radius: 12px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  }
 
   :global(body) {
     margin: 0;
     font-family: 'Avenir', sans-serif;
-    background-image: url("public/images/Ol.jpg"); /* Ruta de la imagen de fondo */
-    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
-    background-position: center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-image: url("public/images/Ol.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #333;
   }
   
   main {
     position: relative;
     z-index: 1;
-    backdrop-filter: blur(4px); /* Difumina el fondo detrás del main */
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    backdrop-filter: blur(4px);
+    background-color: rgba(255, 255, 255, 0.8);
     padding: 2rem;
-    border-radius: 12px; /* Bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para destacar el main */
-    max-width: 1200px; /* Ancho máximo del contenido */
-    margin: 2rem auto; /* Centra el main horizontalmente */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 2rem auto;
   }
-
 
   h2 {
     font-family: 'Avenir', sans-serif;
     font-weight: 300;
-    margin-left: 3rem;
+    margin-left: 0;
     margin-bottom: 2rem;
     color: #000000;
   }
@@ -160,6 +207,10 @@ onMount(() => {
     display: flex;
     align-items: center;
     margin-bottom: 1.5rem;
+    width: 100%; 
+    padding: 0; 
+    margin-left: 0;
+    margin-right: 0; 
   }
 
   .etiqueta {
@@ -168,10 +219,11 @@ onMount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0;
   }
 
   .bandera {
-    width: 50px; /* Ajusta el tamaño de la bandera */
+    width: 50px;
     height: auto;
   }
 
@@ -180,27 +232,30 @@ onMount(() => {
     flex-wrap: nowrap;
     gap: 1px;
     align-items: center;
+    padding: 0;
+    margin: 0;
   }
 
   .medalla {
-    width: 36px; /* Doble del tamaño original */
-    height: 36px; /* Doble del tamaño original */
+    width: 36px;
+    height: 36px;
   }
 
-
-.tabla-deportes {
+  .tabla-deportes {
+    margin-top: 7rem;
     width: 100%;
-    border-collapse: separate; /* Cambiar a 'separate' para permitir bordes redondeados */
-    border-spacing: 0; /* Eliminar espacios entre celdas */
+    border-collapse: separate;
+    border-spacing: 0;
     font-size: 1.1rem;
-    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco con transparencia */
-    border-radius: 12px; /* Bordes redondeados solo en los extremos */
-    overflow: hidden; /* Asegura que el contenido no sobresalga de los bordes redondeados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para destacar la tabla */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 7rem;
   }
 
   .tabla-deportes thead {
-    background-color: #003366; /* Color azul oscuro para encajar con la estética */
+    background-color: #003366;
     color: white;
   }
 
@@ -212,7 +267,7 @@ onMount(() => {
   }
 
   .tabla-deportes tbody tr:last-child td {
-    border-bottom: none; /* Eliminar el borde inferior de la última fila */;
+    border-bottom: none;
   }
 
   .graficos-header {
@@ -226,41 +281,33 @@ onMount(() => {
 
   .graficos-container {
     display: flex;
-    justify-content: space-between; /* Espacio entre los gráficos */
-    align-items: flex-start; /* Alinear los gráficos al inicio verticalmente */
-    gap: 2rem; /* Espaciado entre los gráficos */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
     margin-top: 2rem;
-    flex-wrap: wrap; /* Permite que los gráficos se ajusten en filas si no hay espacio horizontal */
+    flex-wrap: wrap;
   }
 
   .flourish-embed {
-    flex: 1; /* Permite que los gráficos se ajusten al espacio disponible */
-    max-width: 48%; /* Limita el ancho de cada gráfico */
-    height: 400px; /* Altura fija para ambos gráficos */
-    box-sizing: border-box; /* Asegura que el padding y el borde no afecten el tamaño */
-    overflow: hidden; /* Oculta cualquier contenido que exceda los límites del contenedor */
+    flex: 1;
+    max-width: 48%;
+    height: 600px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
-  .flourish-embed iframe {
-    width: 100% !important; /* Asegura que el gráfico ocupe todo el ancho del contenedor */
-    height: 100% !important; /* Asegura que el gráfico ocupe toda la altura del contenedor */
-    max-width: 100%; /* Evita que el iframe exceda el ancho del contenedor */
-    max-height: 100%; /* Evita que el iframe exceda la altura del contenedor */
-  }
 
-  
   .footer {
-    background-color: #003366; /* Azul oscuro */
-    color: white; /* Texto blanco */
-    text-align: center; /* Centrar el texto */
-    padding: 1rem; /* Espaciado interno */
-    margin-top: 3rem; /* Aumenta la separación del contenido anterior */
-    font-family: 'Avenir', sans-serif; /* Fuente consistente */
-    font-size: 0.9rem; /* Tamaño de fuente */
-    border-radius: 0 0 12px 12px; /* Bordes redondeados en la parte inferior */
-    clear: both; /* Asegura que el footer no sea afectado por elementos flotantes */
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 3rem;
+    font-family: 'Avenir', sans-serif;
+    font-size: 0.9rem;
+    border-radius: 0 0 12px 12px;
+    clear: both;
   }
-
 
   .footer-social {
     margin-top: 1rem;
@@ -276,6 +323,4 @@ onMount(() => {
   .social-link:hover {
     text-decoration: underline;
   }
-
-
 </style>

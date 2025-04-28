@@ -10,17 +10,18 @@
   });
 
   let paises = [
-    { nombre: "Estados Unidos", medallas: 98 },
-    { nombre: "China", medallas: 92 },
-    { nombre: "Rusia", medallas: 87 },
-    { nombre: "Francia", medallas: 77 },
-    { nombre: "Reino Unido", medallas: 71 },
-    { nombre: "Japón", medallas: 63 },
-    { nombre: "Alemania", medallas: 54 },
-    { nombre: "Corea del Sur", medallas: 42 },
-    { nombre: "Italia", medallas: 33 },
-    { nombre: "Brasil", medallas: 24 }
-  ];
+  { nombre: "Estados Unidos", oro: 98, plata: 25 },
+  { nombre: "China", oro: 92, plata: 28 },
+  { nombre: "Rusia", oro: 87, plata: 32 },
+  { nombre: "Francia", oro: 77, plata: 38 },
+  { nombre: "Reino Unido", oro: 71, plata: 43 },
+  { nombre: "Japón", oro: 63, plata: 50 },
+  { nombre: "Alemania", oro: 54, plata: 56 },
+  { nombre: "Corea del Sur", oro: 42, plata: 45 },
+  { nombre: "Italia", oro: 33, plata: 35 },
+  { nombre: "Brasil", oro: 24, plata: 23 }
+];
+
 
   const escalaFactor = 4;
   const max = d3.max(paises, d => d.medallas / escalaFactor);
@@ -39,85 +40,77 @@
       vivieron momentos inolvidables que destacaron el espíritu deportivo y la excelencia atlética. A continuacion un breve
     video con lo que fue lo mejor de Paris 2024...</p>
 
-
-    <div class="video-container">
-      <iframe 
-        width="1000" 
-        height="562" 
-        src="https://www.youtube.com/embed/vy6FivZHRjQ" 
-        title="YouTube video player" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-      </iframe>
-    </div>
-
   
 
-  <h2>Medallero Olimpico</h2>
+  <h2>Medallero Olimpico </h2>
+  <h6>(1 ícono = 4 medallas reales)</h6>
 
-  {#each paises as pais}
-    <div class="fila">
-      <div class="etiqueta">
-        <img src={`/images/${pais.nombre}.svg`} alt={pais.nombre} class="bandera" />
+  {#each paises as pais, i}
+  <div class="fila">
+    <div class="etiqueta">
+      <img src={`/images/${pais.nombre}.svg`} alt={pais.nombre} class="bandera" />
+    </div>
+    <div class="medallas-container">
+      <div class="medallas" style="width: {escalaColumnas(pais.oro / escalaFactor)}px">
+        {#each Array(Math.floor(pais.oro / escalaFactor)) as _, j}
+          <img src="/images/medalla.svg" alt="medalla de oro" class="medalla" />
+        {/each}
       </div>
-      <div class="medallas" style="width: {escalaColumnas(pais.medallas / escalaFactor)}px">
-        {#each Array(Math.floor(pais.medallas / escalaFactor)) as _, i}
-          <img src="/images/medalla.svg" alt="medalla" class="medalla" />
+      <div class="medallas" style="width: {escalaColumnas(pais.plata / escalaFactor)}px">
+        {#each Array(Math.floor(pais.plata / escalaFactor)) as _, j}
+          <img src="/images/Medalla_plata.svg" alt="medalla de plata" class="medalla" />
         {/each}
       </div>
     </div>
-  {/each}
+  </div>
+{/each}
 
-  <section class="historia-section">
-    <table class="historia-lista tabla-deportes">
-      <thead>
-        <tr>
-          <th>Pais</th>
-          <th>Medallas Ganadas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Estdos Unidos</td><td>98</td></tr>
-        <tr><td>China</td><td>92</td></tr>
-        <tr><td>Rusia</td><td>87</td></tr> 
-        <tr><td>Francia</td><td>77</td></tr>
-        <tr><td>Reino Unido</td><td>71</td></tr>
-        <tr><td>Japón</td><td>63</td></tr>
-        <tr><td>Alemania</td><td>54</td></tr>
-        <tr><td>Corea del Sur</td><td>42</td></tr>
-        <tr><td>Italia</td><td>33</td></tr>
-        <tr><td>Brasil</td><td>24</td></tr> 
-      </tbody>
-    </table>
-  </section>
 
-  <h2 class="graficos-header">La localía... ¿Ayudó a Francia?</h2>
-  <p>Competir como país anfitrión suele ser una ventaja significativa para los atletas,
-     ya que la familiaridad con el entorno, el apoyo del público local y la reducción del 
-     estrés logístico pueden mejorar su rendimiento. Sin embargo, esta localía también puede 
-     transformarse en una fuente de presión adicional, ya que las expectativas de la nación
-     están puestas sobre ellos, lo que puede afectar tanto positiva como negativamente su
-     desempeño.¿Fue esto un impulso o una carga para los atletas franceses en París 2024?
-     Para responder esta pregunta, vamos a retroceder en el tiempo y analizar
-     cómo se ha comportado Francia en comparación con una potencia histórica como Estados Unidos,
-     contrastando sus resultados en esta edición con los de los Juegos anteriores.</p>
+
+
+  <h2 class="graficos-header">La localía ayudó a Francia en 2024</h2>
+
+     <p class="texto-graficos-header">Competir como país anfitrión suele ser una ventaja significativa para los atletas,
+      ya que la familiaridad con el entorno, el apoyo del público local y la reducción del 
+      estrés logístico pueden mejorar su rendimiento. Sin embargo, esta localía también puede 
+      transformarse en una fuente de presión adicional, ya que las expectativas de la nación
+      están puestas sobre ellos, lo que puede afectar tanto positiva como negativamente su
+      desempeño.¿Fue esto un impulso o una carga para los atletas franceses en París 2024?
+      Para responder esta pregunta, vamos a retroceder en el tiempo y analizar
+      cómo se ha comportado Francia en comparación con una potencia histórica como Estados Unidos,
+      contrastando sus resultados en esta edición con los de los Juegos anteriores</p>
   
-  <section class="graficos-container">
-    <div class="flourish-embed flourish-chart" data-src="visualisation/22674075">
-      <script src="https://public.flourish.studio/resources/embed.js"></script>
-      <noscript>
-        <img src="https://public.flourish.studio/visualisation/22674075/thumbnail" width="100%" alt="chart visualization" />
-      </noscript>
-    </div>
-  
-    <div class="flourish-embed flourish-chart" data-src="visualisation/22561745">
-      <script src="https://public.flourish.studio/resources/embed.js"></script>
-      <noscript>
-        <img src="https://public.flourish.studio/visualisation/22561745/thumbnail" width="100%" alt="chart visualization" />
-      </noscript>
-    </div>
-  </section>
+      <div class="graficos-wrapper">
+        <section class="graficos-container">
+          <div class="flourish-embed flourish-chart" data-src="visualisation/22674075">
+            <script src="https://public.flourish.studio/resources/embed.js"></script>
+            <noscript>
+              <img src="https://public.flourish.studio/visualisation/22674075/thumbnail" width="100%" alt="chart visualization" />
+            </noscript>
+          </div>
+      
+          <div class="flourish-embed flourish-chart" data-src="visualisation/22561745">
+            <script src="https://public.flourish.studio/resources/embed.js"></script>
+            <noscript>
+              <img src="https://public.flourish.studio/visualisation/22561745/thumbnail" width="100%" alt="chart visualization" />
+            </noscript>
+          </div>
+        </section>
+      </div>
+      
+      
+
+  <div class="video-container">
+    <iframe 
+      width="1000" 
+      height="562" 
+      src="https://www.youtube.com/embed/vy6FivZHRjQ" 
+      title="YouTube video player" 
+      frameborder="0" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      allowfullscreen>
+    </iframe>
+  </div>
 
   <footer class="footer">
     <p>© 2025 Juegos Olímpicos - Todos los derechos reservados</p>
@@ -155,13 +148,16 @@
     font-family: "Avenir", sans-serif;
     font-weight: 200;
     text-align: justify;
+    margin-left: 50px;
+    margin-right: 50px;
   }
+
 
   .video-container {
     display: flex;
     justify-content: center;
     margin-top: 2rem;
-    margin-bottom: 7rem;
+    margin-bottom: 0rem;
     
   }
 
@@ -171,12 +167,14 @@
     height: 562px; 
     border-radius: 12px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    margin-top: 0px;
+
   }
 
   :global(body) {
     margin: 0;
     font-family: 'Avenir', sans-serif;
-    background-image: url("public/images/Ol.jpg");
+    background-image: url("public/images/Olimpicosv2.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -186,7 +184,7 @@
   main {
     position: relative;
     z-index: 1;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(10px);
     background-color: rgba(255, 255, 255, 0.8);
     padding: 2rem;
     border-radius: 12px;
@@ -198,9 +196,14 @@
   h2 {
     font-family: 'Avenir', sans-serif;
     font-weight: 300;
-    margin-left: 0;
-    margin-bottom: 2rem;
+    margin-left: 50px;
+    margin-bottom: 0rem;
     color: #000000;
+  }
+
+  h6{
+    margin-left: 50px;
+    margin-top: 0px;
   }
 
   .fila {
@@ -223,61 +226,53 @@
   }
 
   .bandera {
-    width: 50px;
+    width: 70px;
     height: auto;
   }
 
-  .medallas {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 1px;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-  }
+  .medallas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Espacio entre oro y plata */
+}
 
-  .medalla {
-    width: 36px;
-    height: 36px;
-  }
+.medallas {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1px;
+  align-items: center;
+}
 
-  .tabla-deportes {
-    margin-top: 7rem;
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: 1.1rem;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 7rem;
-  }
+.medalla {
+  width: 36px;
+  height: 36px;
+}
 
-  .tabla-deportes thead {
-    background-color: #003366;
-    color: white;
-  }
 
-  .tabla-deportes th,
-  .tabla-deportes td {
-    padding: 12px 20px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-
-  .tabla-deportes tbody tr:last-child td {
-    border-bottom: none;
-  }
 
   .graficos-header {
     margin-top: 5rem;
     font-family: 'Avenir', sans-serif;
     font-weight: 300;
-    margin-left: 0;
+    margin-left: 50px;
     margin-bottom: 0;
     color: #000000;
+    
   }
+
+  .texto-graficos-header{
+    font-family: "Avenir", sans-serif;
+    font-weight: 200;
+    text-align: justify;
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+
+  .graficos-wrapper {
+  margin-left: 70px;
+  margin-right: 70px;
+  margin-bottom: 0px;
+}
 
   .graficos-container {
     display: flex;
@@ -286,15 +281,20 @@
     gap: 2rem;
     margin-top: 2rem;
     flex-wrap: wrap;
+    margin-bottom: 0px;
   }
 
   .flourish-embed {
-    flex: 1;
-    max-width: 48%;
-    height: 600px;
-    box-sizing: border-box;
-    overflow: hidden;
-  }
+  flex: 1;
+  max-width: 48%;
+  min-width: 300px;
+  height: auto; /* 🔥 en lugar de height fijo */
+  aspect-ratio: 4/3; /* Mantiene buena proporción */
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-bottom: 0; /* 🔥 importante */
+}
+
 
 
   .footer {
@@ -307,6 +307,8 @@
     font-size: 0.9rem;
     border-radius: 0 0 12px 12px;
     clear: both;
+    margin-left: 70px;
+    margin-right: 70px;
   }
 
   .footer-social {
